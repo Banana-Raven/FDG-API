@@ -1,0 +1,29 @@
+{
+  "name": "fdg",
+  "version": "1.0.0",
+  "description": "FDG API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Banana-Raven/FDG-API.git"
+  },
+  "author": "Travis Nutting",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Banana-Raven/FDG-API/issues"
+  },
+  "homepage": "https://github.com/Banana-Raven/FDG-API#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.4.1",
+    "mongoose": "^5.8.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
