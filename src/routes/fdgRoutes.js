@@ -1,6 +1,8 @@
 import { addNewContact,
         getContacts,
-        getContactWithID
+        getContactWithID,
+        updateContact,
+        deleteContact
             } from '../controllers/fdgController';
 
 const routes = (app) => {
@@ -12,17 +14,19 @@ const routes = (app) => {
             next();
         }, getContacts)
         
-
+        //post endpoint
         .post(addNewContact);
 
     app.route('/contact/:contactID')
+        
+        //get a specific contact
         .get(getContactWithID)    
-
-        .put((req, res) => 
-        res.send('PUT request successful!'))
-
-        .delete((req, res) => 
-        res.send('DELETE request successful!'));
+        
+        //updating a specific contact
+        .put(updateContact)
+        
+        //deleting a specific contact
+        .delete(deleteContact);
 }
 
 export default routes;
