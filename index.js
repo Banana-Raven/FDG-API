@@ -8,6 +8,10 @@ import mysql from 'mysql';
 const app = express();
 const PORT = 4000;
 
+//LOGGING
+//https://www.twilio.com/blog/guide-node-js-logging
+//this https://www.loggly.com/ultimate-guide/node-logging-basics/
+
 //MySQL connection
 var connection = mysql.createConnection({
     host: 'fdg.tnutting.com',

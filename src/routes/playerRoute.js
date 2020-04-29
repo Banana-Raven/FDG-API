@@ -7,11 +7,13 @@
 
 import { 
         getAllPlayers,
-        addNewPlayer
+        addNewPlayer,
+        getPlayerById,
+        getPlayerByPDGANum
         } from '../controllers/playerController';
 
  const routes = (app) => {
-     //ET /player -> Returns all players
+    //GET /player -> Returns all players
     app.route('/player') 
         .get((req, res, next) => {
             //middleware
@@ -25,7 +27,7 @@ import {
         //post endpoint
         .post(addNewPlayer);
 
-   /* app.route('/player/:playerID')
+   app.route('/player/:playerId')
         
 
     //GET /playerByID/:playerID -> Returns a player by ID
@@ -40,13 +42,20 @@ import {
 
 
         //get a specific contact
-        .get(getContactWithID)    
+        .get(getPlayerById);    
         
         //updating a specific contact
-        .put(updateContact)
+        //.put(updateContact)
         
         //deleting a specific contact
-        .delete(deleteContact);*/
+        //.delete(deleteContact);
+
+
+    app.route('/player/pdga/:pdga_number')
+        .get(getPlayerByPDGANum);
+
+
+
 }
 
 export default routes;

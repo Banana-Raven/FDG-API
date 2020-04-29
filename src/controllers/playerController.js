@@ -1,4 +1,5 @@
 import db from '../models/dbconnection';
+import Player from '../models/playerModel';
 
 export const getAllPlayers = (req, res) => {
     let pathname = req._parsedUrl.pathname.split('/');
@@ -40,8 +41,9 @@ export const getAllPlayers = (req, res) => {
 
     //adding a player
     //body: player_name, pdga_number, sponsor, division, img_url
-    export const addNewPlayer = (req, res) => {
-        var results = db.query('INSERT INTO player SET player_name = ?, pdga_number=?, sponsor=?, division=?, img_url=?', [req.body.player_name, req.body.pdga_number, req.body.sponsor, req.body.division, req.body.img_url], (err, results) => {
+export const addNewPlayer = (req, res) => {
+        //commenting out the working version of addnewplayer for testing the new model
+        /*var results = db.query('INSERT INTO player SET player_name = ?, pdga_number=?, sponsor=?, division=?, img_url=?', [req.body.player_name, req.body.pdga_number, req.body.sponsor, req.body.division, req.body.img_url], (err, results) => {
             if (!req.body) {
                 res.status(400).send({
                     message: "Content can not be empty"
@@ -62,11 +64,77 @@ export const getAllPlayers = (req, res) => {
             //Change this to return the player that was created.
             res.send(results);
 
+        });*/ //This is the end of the working addnewplayer
+        
+
+        // Validate request
+    if (!req.body) {
+        res.status(400).send({
+            message: "Content cannot be empty!"
         });
+    }
+
+        //TO-DO
+        //add validations that the proper data is all there
+
+        //Create the player
+    const player = new Player({
+        player_name: req.body.player_name,
+        pdga_number: req.body.pdga_number,
+        sponsor: req.body.sponsor,
+        division: req.body.division,
+        img_url: req.body.img_url
+    });
+
+    Player.create(player, (err, data) => {
+        if (err)
+            res.states(500).send({
+                message:
+                    err.message || "Some error occured while creating the Customer."
+            });
+        else res.send(data);
+    });
+
+
+
 
     /*newContact.save((err, contact) => {
         if(err) {  
             res.send(err);
         }
         res.json(contact);*/
-    }
+}
+
+//must have the param:
+//playerId
+export const getPlayerById = (req, res) => {
+    Player.findById(req.params.playerId, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `not found Player with id ${req.params.playerId}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error retrieving Player with id " + req.params.playerId
+                });
+            }
+        } else res.send(data);
+    });
+}
+
+export const getPlayerByPDGANum = (req, res) => {
+    Player.findByPDGANum(req.params.pdga_number, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `not found Player with PDGA number ${req.params.pdga_number}.`
+                });
+            } else {
+                res.status(500).send({
+                    message: "Error retrieving Player with PDGA number " + req.params.pdga_number
+                });
+            }
+        } else res.send(data);
+    });
+}
